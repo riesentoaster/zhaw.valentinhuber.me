@@ -80,7 +80,7 @@ export default {
       return res.sort((a, b) => a.length - b.length);
     };
 
-    const rawInput = ref('{"0":{"starting":true,"accepting":false,"paths":[{"input":["1"],"output":["1"]}]},"1":{"starting":false,"accepting":false,"paths":[{"input":["1"],"output":["2"]},{"input":["3"],"output":["1","2"]}]},"2":{"starting":false,"accepting":false,"paths":[{"input":["1"],"output":["3"]},{"input":["3"],"output":["3","4"]}]},"3":{"starting":false,"accepting":false,"paths":[{"input":["1"],"output":["2"]},{"input":["3"],"output":["2"]}]},"4":{"starting":false,"accepting":true,"paths":[]}}');
+    const rawInput = ref('{"node0":{"starting":true,"accepting":false,"paths":[{"input":["input1"],"output":["node1"]}]},"node1":{"starting":false,"accepting":false,"paths":[{"input":["input1"],"output":["node2"]},{"input":["input3"],"output":["node1","node2"]}]},"node2":{"starting":false,"accepting":false,"paths":[{"input":["input1"],"output":["node3"]},{"input":["input3"],"output":["node3","node4"]}]},"node3":{"starting":false,"accepting":false,"paths":[{"input":["input1"],"output":["node2"]},{"input":["input3"],"output":["node2"]}]},"node4":{"starting":false,"accepting":true,"paths":[]}}');
     const beautifyTextArea = () => {
       console.log('beautifying');
       rawInput.value = JSON.stringify(JSON.parse(rawInput.value), null, 2);

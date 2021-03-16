@@ -2,6 +2,7 @@
 // const path = require('path');
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/zhaw.valentinhuber.me/' : '/',
+  // publicPath: process.env.NODE_ENV === 'production' ? '/zhaw.valentinhuber.me/' : '/',
+  publicPath: '/',
   // outputDir: path.resolve(__dirname, './docs'),
 };

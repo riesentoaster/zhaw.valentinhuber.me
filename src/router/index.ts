@@ -16,12 +16,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Thin.vue'),
   },
   {
-    path: '/thin/dae',
-    name: 'dae',
+    path: '/thin/dea',
+    name: 'dea',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/thin/Dae.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/thin/Dea.vue'),
   },
 ];
 

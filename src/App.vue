@@ -4,7 +4,7 @@
     <router-link to="/thin">THIN</router-link> |
     <a href="https://github.com/riesentoaster/zhaw.valentinhuber.me">GitHub</a>
     <div v-if="new RegExp('^/thin(/.+)?$').test(this.$route.path)">
-      <router-link to="/thin/dae">DAE</router-link>
+      <router-link to="/thin/dea">DEA</router-link>
     </div>
   </nav>
   <main>

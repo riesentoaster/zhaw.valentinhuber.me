@@ -63,6 +63,8 @@
 import {
   ref, computed, reactive,
 } from 'vue';
+// import * as _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import { generateCombinations, generateInputs } from './generateDEA';
 import { NewNode } from './Interfaces.d';
 
@@ -91,7 +93,7 @@ export default {
       },
     });
     const addNode = () => {
-      input[newNode.name] = newNode.node;
+      input[newNode.name] = cloneDeep(newNode.node);
     };
     return {
       input,

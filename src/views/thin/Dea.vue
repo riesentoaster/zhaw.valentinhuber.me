@@ -74,16 +74,7 @@ export default {
     const input = reactive(JSON.parse('{"node0":{"starting":true,"accepting":false,"paths":{"input1":["node1"]}},"node1":{"starting":false,"accepting":false,"paths":{"input1":["node1","node2"]}},"node2":{"starting":false,"accepting":true,"paths":{"input0":["node1"],"input2":["node0"]}}}'));
     const inputs = computed(() => generateInputs(input));
     const output = computed(() => generateCombinations(input));
-    const removeNode = (node: string) => {
-      delete input[node];
-    };
     const newInput = ref('');
-    const addInput = () => {
-      if (inputs.value.indexOf(newInput.value) < 0) {
-        const firstNode = Object.keys(input)[0];
-        input[firstNode].paths[newInput.value] = [];
-      }
-    };
     const newNode: NewNode = reactive({
       name: '',
       starting: false,
@@ -91,6 +82,20 @@ export default {
       paths: Object.fromEntries(inputs.value.map((e) => [e, ''])),
 
     });
+    const removeNode = (node: string) => {
+      delete input[node];
+      Object.keys(newNode.paths).forEach((path) => {
+        if (inputs.value.indexOf(path) < 0) {
+          delete newNode.paths[path];
+        }
+      });
+    };
+    const addInput = () => {
+      if (inputs.value.indexOf(newInput.value) < 0) {
+        const firstNode = Object.keys(input)[0];
+        input[firstNode].paths[newInput.value] = [];
+      }
+    };
     const addNode = () => {
       const nodeToAdd: InputNode = {
         starting: newNode.starting,

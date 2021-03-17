@@ -14,7 +14,13 @@ export interface InputPaths {
 
 export interface NewNode {
   name: string;
-  node: InputNode;
+  starting: boolean;
+  accepting: boolean;
+  paths: NewNodePath;
+}
+
+export interface NewNodePath {
+  [input: string]: string;
 }
 
 export interface Path {

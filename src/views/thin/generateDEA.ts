@@ -77,12 +77,18 @@ const generateCombinations = (input: Input) => {
         pathsToAdd[key].push(...value);
       });
     });
+
     Object.entries(pathsToAdd)
       .filter((value, index, self) => self.indexOf(value) === index)
-      .sort();
-    Object.entries(pathsToAdd).forEach(([inputt, outputts]) => {
-      combination.paths.push({ input: inputt, output: outputts });
-    });
+      .sort()
+      .forEach(([inputt, outputts]) => {
+        combination.paths.push({
+          input: inputt,
+          output: outputts.filter((outputtt) => outputtt.length > 0)
+            .filter((value, index, self) => self.indexOf(value) === index)
+            .sort(),
+        });
+      });
   });
   // eslint-disable-next-line no-param-reassign
   res.forEach((combination) => { combination.reached = combination.starting; });
@@ -96,9 +102,8 @@ const generateCombinations = (input: Input) => {
         res.forEach((compareCombination) => {
           if (!compareCombination.reached) {
             combination.paths.forEach((path) => {
-              const reaches = (path.output.length > 0
-                && compareArray(path.output, compareCombination.nodes));
-              if (reaches) {
+              if (path.output.length > 0
+                    && compareArray(path.output, compareCombination.nodes)) {
                 // eslint-disable-next-line no-param-reassign
                 compareCombination.reached = true;
                 addedReached = true;
@@ -108,7 +113,6 @@ const generateCombinations = (input: Input) => {
         });
       });
   }
-  // return res;
   res = res.filter((e) => e.reached);
   res.forEach((combination, index) => {
     res.forEach((compareCombination) => {

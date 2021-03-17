@@ -16,21 +16,21 @@
       <th v-for="input of inputs" :key="input">{{input}}</th>
       <th>Actions</th>
     </tr>
-    <tr v-for="[nodeName, node] of Object.entries(input)" :key="nodeName">
+    <tr v-for="[nodeName, node] of Object.entries(input).sort()" :key="nodeName">
       <td>{{nodeName}}</td>
       <td>{{node.starting}}</td>
       <td>{{node.accepting}}</td>
       <td v-for="input of inputs" :key="input">
-        {{node.paths[input]?.length > 0 ? node.paths[input]: ''}}
+        {{node.paths[input]?.length > 0 ? node.paths[input].join(', '): ''}}
       </td>
       <td><button @click.prevent="removeNode(nodeName)">Delete node</button></td>
     </tr>
     <tr>
       <td><input type="text" v-model="newNode.name"></td>
-      <td><input type="checkbox" v-model="newNode.node.starting"></td>
-      <td><input type="checkbox" v-model="newNode.node.accepting"></td>
+      <td><input type="checkbox" v-model="newNode.starting"></td>
+      <td><input type="checkbox" v-model="newNode.accepting"></td>
       <td v-for="inputt of inputs" :key="inputt">
-        <input type="text" v-model="newNode.node.paths[inputt]">
+        <input type="text" v-model="newNode.paths[inputt]">
       </td>
       <td>
         <button @click.prevent="addNode()">Add node</button>
@@ -66,7 +66,7 @@ import {
 // import * as _ from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import { generateCombinations, generateInputs } from './generateDEA';
-import { NewNode } from './Interfaces.d';
+import { InputNode, NewNode } from './Interfaces.d';
 
 export default {
   components: { },
@@ -86,14 +86,20 @@ export default {
     };
     const newNode: NewNode = reactive({
       name: '',
-      node: {
-        starting: false,
-        accepting: false,
-        paths: Object.fromEntries(inputs.value.map((e) => [e, []])),
-      },
+      starting: false,
+      accepting: false,
+      paths: Object.fromEntries(inputs.value.map((e) => [e, ''])),
+
     });
     const addNode = () => {
-      input[newNode.name] = cloneDeep(newNode.node);
+      const nodeToAdd: InputNode = {
+        starting: newNode.starting,
+        accepting: newNode.accepting,
+        paths: Object.fromEntries(Object.entries(newNode.paths)
+          .map(([inputt, outputt]) => [inputt,
+            outputt.split(',').map((e) => e.trim()).sort()])),
+      };
+      input[newNode.name] = cloneDeep(nodeToAdd);
     };
     return {
       input,
